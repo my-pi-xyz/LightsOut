@@ -8,20 +8,27 @@
 ########################################################################
 
 from time import sleep
+from datetime import *
 from grovepi import *
 from display import *
 from LED import *
 from buzzer import *
-
+from motion import *
+from clock import RealTimeClock
+from light import *
 
 red_LED_pin = 5
 buzzer_pin = 6
+motion_sensor = 7
+real_time_clock = 1
+light_sensor = 0
 
 
 def setup():
     # Initialize the application on startup
     pinMode(red_LED_pin, 'OUTPUT')
     pinMode(buzzer_pin, 'OUTPUT')
+    pinMode(motion_sensor, 'INPUT')
 
     sleep(1)
 
@@ -29,16 +36,16 @@ def setup():
 def destroy():
     # Program clean up
     lcdReset()
+    buzzerOff(buzzer_pin)
 
 
 def loop():
-    while True:
-        buzzerOn(buzzer_pin)
-        sleep(1)
-        buzzerOff(buzzer_pin)
-        sleep(1)
+    # Program's main loop
+    # myClock = RealTimeClock(real_time_clock)
 
-    # Program main loop
+    sensor_value, resistance = getLightReading(light_sensor)
+
+    print(sensor_value, resistance)
 
     destroy()
 
